@@ -45,6 +45,7 @@ Here is an example of what that should look like:
   ]
 }
 ```
+Here's an [Example](https://cogmm.netlify.app/ModRepo/MasterChief.zip) of my Master Chief character mod to demonstrate what a complete mod looks like.
 
 
 Finally, zip up the `CartOfGlory` folder you made with all your assets in it along with the `manifest.cog` file. Your zip should not contain any subfolders, and simply look like this:
