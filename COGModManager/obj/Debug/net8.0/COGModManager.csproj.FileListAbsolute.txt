@@ -32,3 +32,4 @@ D:\GITHUB\CogModManager\COGModManager\obj\Debug\net8.0\refint\COGModManager.dll
 D:\GITHUB\CogModManager\COGModManager\obj\Debug\net8.0\COGModManager.pdb
 D:\GITHUB\CogModManager\COGModManager\obj\Debug\net8.0\COGModManager.genruntimeconfig.cache
 D:\GITHUB\CogModManager\COGModManager\obj\Debug\net8.0\ref\COGModManager.dll
+D:\GITHUB\CogModManager\COGModManager\obj\Debug\net8.0\COGModManager.sourcelink.json

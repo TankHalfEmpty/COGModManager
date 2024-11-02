@@ -23,7 +23,10 @@ namespace COGModManager
         private static string AppDataFolder =
             Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "COGModManager");
 
+        
         private static string BackupFolder => Path.Combine(AppDataFolder, "Backup");
+        private static string DisabledModsFolder => Path.Combine(AppDataFolder, "DisabledMods");
+
         private static string DataFilePath => Path.Combine(GameDirectory, DataFileName);
         private static Dictionary<string, ModData> InstalledMods = new Dictionary<string, ModData>();
 
@@ -73,15 +76,17 @@ namespace COGModManager
             while (true)
             {
                 Console.Clear();
-                WriteLineColored("🌌 COG Mod Manager by TankHalfEmpty", ConsoleColor.Cyan);
+                WriteLineColored("📦 COG Mod Manager by TankHalfEmpty", ConsoleColor.Cyan);
                 WriteLineColored("1. 📜 Help", ConsoleColor.Green);
                 WriteLineColored("2. 🔧 Patch", ConsoleColor.Green);
                 WriteLineColored("3. 🧹 Unpatch", ConsoleColor.Green);
                 WriteLineColored("4. ➕ Install", ConsoleColor.Green);
                 WriteLineColored("5. ➖ Uninstall", ConsoleColor.Green);
-                WriteLineColored("6. 🌐 Repository", ConsoleColor.Green);
-                WriteLineColored("7. 🔄 Restore", ConsoleColor.Green);
-                WriteLineColored("8. ❌ Exit", ConsoleColor.Red);
+                WriteLineColored("6. ✅ Enable", ConsoleColor.Green);
+                WriteLineColored("7. 🚫 Disable", ConsoleColor.Green);
+                WriteLineColored("8. 🌐 Repository", ConsoleColor.Green);
+                WriteLineColored("9. 🔄 Restore", ConsoleColor.Green);
+                WriteLineColored("0. ❌ Exit", ConsoleColor.Red);
 
                 string? input = Console.ReadLine();
                 switch (input)
@@ -108,13 +113,21 @@ namespace COGModManager
                         break;
                     case "6":
                         Console.Clear();
-                        ShowRepository();
+                        EnableMod();
                         break;
                     case "7":
                         Console.Clear();
-                        Restore();
+                        DisableMod();
                         break;
                     case "8":
+                        Console.Clear();
+                        ShowRepository();
+                        break;
+                    case "9":
+                        Console.Clear();
+                        Restore();
+                        break;
+                    case "0":
                         return;
                     default:
                         Console.Clear();
@@ -124,6 +137,7 @@ namespace COGModManager
                 }
             }
         }
+
 
 
         private static void ShowHelp()
@@ -136,9 +150,146 @@ namespace COGModManager
             WriteLineColored("➕ Install - Installs a mod from a specified zip file or URL.", ConsoleColor.Yellow);
             WriteLineColored("➖ Uninstall - Uninstalls a mod by its name.", ConsoleColor.Yellow);
             WriteLineColored("🌐 Repository - Lists mods from the Online Repository.", ConsoleColor.Yellow);
+            WriteLineColored("✅ Enable - Enables a disabled mod.", ConsoleColor.Yellow);
+            WriteLineColored("🚫 Disable - Disables an enabled mod.", ConsoleColor.Yellow);
             WriteLineColored("🔄 Restore - Restores the game files from the backup.", ConsoleColor.Yellow);
             PromptReturn();
         }
+        
+        private static void EnableMod()
+        {
+            Console.Clear();
+            var disabledMods = InstalledMods
+                .Where(mod => mod.Value.IsDisabled)
+                .Select(mod => mod.Key)
+                .ToList();
+
+            if (disabledMods.Count == 0)
+            {
+                WriteLineColored("ℹ️ No disabled mods available to enable.", ConsoleColor.Cyan);
+                PromptReturn();
+                return;
+            }
+
+            Console.WriteLine("Disabled Mods:");
+            int index = 1;
+            foreach (var modName in disabledMods)
+                WriteLineColored($"{index++}. {modName}", ConsoleColor.Red);
+
+            Console.WriteLine("🔧 Enter the number of the mod to enable:");
+            if (int.TryParse(Console.ReadLine(), out int choice) && choice > 0 && choice <= disabledMods.Count)
+            {
+                string modName = disabledMods[choice - 1];
+                if (InstalledMods.TryGetValue(modName, out ModData? modData))
+                {
+                    string disabledModPath = Path.Combine(DisabledModsFolder, modName);
+
+                    foreach (string filePath in modData.InstalledFilePaths)
+                    {
+                        string relativePath = Path.GetRelativePath(disabledModPath, filePath);
+                        string targetPath = Path.Combine(GameDirectory, relativePath);
+                
+                        string? targetDir = Path.GetDirectoryName(targetPath);
+                        if (targetDir != null) Directory.CreateDirectory(targetDir);
+
+                        File.Move(filePath, targetPath, true);
+                    }
+                    
+                    modData.InstalledFilePaths = modData.InstalledFilePaths
+                        .Select(p => Path.Combine(GameDirectory, Path.GetRelativePath(disabledModPath, p)))
+                        .ToList();
+                    
+                    modData.IsDisabled = false;
+                    SaveInstalledMods();
+
+                    WriteLineColored($"✅ {modData.ModName} enabled successfully.", ConsoleColor.Green);
+                }
+            }
+            else
+            {
+                Console.WriteLine("Invalid selection.");
+            }
+
+            PromptReturn();
+        }
+
+
+
+        
+        private static void DisableMod()
+{
+    if (InstalledMods.Count == 0 || !InstalledMods.Any(mod => !mod.Value.IsDisabled))
+    {
+        WriteLineColored("ℹ️ No enabled mods available to disable.", ConsoleColor.Cyan);
+        PromptReturn();
+        return;
+    }
+
+    Console.WriteLine("Enabled Mods:");
+    var enabledMods = InstalledMods
+        .Where(mod => !mod.Value.IsDisabled)
+        .Select(mod => mod.Key)
+        .ToList();
+
+    int index = 1;
+    foreach (var modName in enabledMods)
+        WriteLineColored($"{index++}. {modName}", ConsoleColor.Green);
+
+    Console.WriteLine("🔧 Enter the number of the mod to disable:");
+    if (int.TryParse(Console.ReadLine(), out int choice) && choice > 0 && choice <= enabledMods.Count)
+    {
+        string modName = enabledMods[choice - 1];
+        if (InstalledMods.TryGetValue(modName, out ModData? modData))
+        {
+            string disabledModPath = Path.Combine(DisabledModsFolder, modName);
+            Directory.CreateDirectory(disabledModPath);
+
+            foreach (string filePath in modData.InstalledFilePaths)
+            {
+                string relativePath = Path.GetRelativePath(GameDirectory, filePath);
+                string targetPath = Path.Combine(disabledModPath, relativePath);
+                
+                string? targetDir = Path.GetDirectoryName(targetPath);
+                if (targetDir != null) Directory.CreateDirectory(targetDir);
+
+                File.Move(filePath, targetPath, true);
+            }
+            
+            modData.InstalledFilePaths = modData.InstalledFilePaths
+                .Select(p => Path.Combine(disabledModPath, Path.GetRelativePath(GameDirectory, p)))
+                .ToList();
+            
+            modData.IsDisabled = true;
+            SaveInstalledMods();
+
+            WriteLineColored($"✅ {modData.ModName} disabled successfully.", ConsoleColor.Green);
+        }
+    }
+    else
+    {
+        Console.WriteLine("Invalid selection.");
+    }
+
+    PromptReturn();
+}
+
+
+
+        
+        private static void MoveModFiles(string sourceDir, string targetDir, IEnumerable<string> filePaths = null)
+        {
+            foreach (var filePath in filePaths ?? Directory.EnumerateFiles(sourceDir, "*", SearchOption.AllDirectories))
+            {
+                string relativePath = Path.GetRelativePath(sourceDir, filePath);
+                string targetPath = Path.Combine(targetDir, relativePath);
+
+                string targetFileDir = Path.GetDirectoryName(targetPath);
+                if (!string.IsNullOrEmpty(targetFileDir)) Directory.CreateDirectory(targetFileDir);
+
+                File.Move(filePath, targetPath, true);
+            }
+        }
+
 
         private static void ShowRepository()
         {
@@ -146,6 +297,7 @@ namespace COGModManager
             WriteLineColored("🌐 Loading repository mods...", ConsoleColor.Cyan);
 
             string repoUrl = WebURL + "ModList.json";
+            string modUrl = WebURL + "ModRepo/";
 
             try
             {
@@ -172,8 +324,8 @@ namespace COGModManager
                     choice <= repoData.RepositoryMods.Count)
                 {
                     string selectedMod = repoData.RepositoryMods[choice - 1].FileName;
-                    string modUrl = WebURL + "ModRepo/" + selectedMod;
-                    DownloadAndInstallModFromUrl(modUrl);
+                    string tempModUrl = modUrl + selectedMod;
+                    DownloadAndInstallModFromUrl(tempModUrl);
                 }
                 else
                 {
@@ -366,9 +518,8 @@ namespace COGModManager
             }
 
             Console.WriteLine("Installed Mods:");
-            int index = 1;
             var modList = InstalledMods.Keys.ToList();
-
+            int index = 1;
             foreach (var modName in modList)
                 Console.WriteLine($"{index++}. {modName}");
 
@@ -379,15 +530,28 @@ namespace COGModManager
                 if (InstalledMods.TryGetValue(modName, out ModData? modData))
                 {
                     UninstallModFiles(modName);
+                    
+                    string disabledModPath = Path.Combine(DisabledModsFolder, modName);
+                    if (Directory.Exists(disabledModPath))
+                    {
+                        Directory.Delete(disabledModPath, true);
+                    }
+                    
                     InstalledMods.Remove(modName);
                     SaveInstalledMods();
+
                     WriteLineColored($"✅ {modData.ModName} uninstalled successfully.", ConsoleColor.Green);
                 }
             }
-            else Console.WriteLine("Invalid selection.");
+            else
+            {
+                Console.WriteLine("Invalid selection.");
+            }
 
             PromptReturn();
         }
+
+
 
         private static void UninstallModFiles(string modName)
         {
@@ -463,34 +627,21 @@ namespace COGModManager
                         modData.ModVersion,
                         ConsoleColor.Cyan);
 
-                    if (InstalledMods.TryGetValue(modData.ModName, out ModData? existingMod))
+                    
+                    if (CheckForConflicts(archive, modData.ModName))
                     {
-                        int versionComparison = string.Compare(modData.ModVersion, existingMod.ModVersion);
-                        if (versionComparison == 0)
-                        {
-                            WriteLineColored($"ℹ️ Identical version of '{modData.ModName}' found. Re-Install? (y/n)",
-                                ConsoleColor.Yellow);
-                            if (Console.ReadLine()?.ToLower() != "y") return;
-                        }
-                        else if (versionComparison > 0)
-                        {
-                            Console.WriteLine(
-                                $"🛠️ Upgrading mod '{modData.ModName}' from version {existingMod.ModVersion} to {modData.ModVersion}.");
-                        }
-                        else
-                        {
-                            Console.WriteLine(
-                                $"🛠️ Downgrading mod '{modData.ModName}' from version {existingMod.ModVersion} to {modData.ModVersion}.");
-                        }
-
-                        UninstallModFiles(existingMod.ModName);
-                        InstalledMods.Remove(existingMod.ModName);
+                        WriteLineColored(
+                            "⚠️ Conflicting files detected. Do you want to proceed with the installation? (y/n)",
+                            ConsoleColor.Yellow);
+                        if (Console.ReadLine()?.ToLower() != "y") return;
                     }
 
+                    
                     var chosenAddons = new HashSet<string>();
                     foreach (var addon in modData.OptionalAddons)
                     {
-                        if (!existingMod?.OptionalAddons.Any(a => a.Directory == addon.Directory) ?? true)
+                        if (!InstalledMods.TryGetValue(modData.ModName, out var existingMod) ||
+                            !existingMod.OptionalAddons.Any(a => a.Directory == addon.Directory))
                         {
                             WriteLineColored($"Optional addon '{addon.AddonName}'. Install? (y/n)",
                                 ConsoleColor.Yellow);
@@ -540,6 +691,28 @@ namespace COGModManager
             }
         }
 
+        private static bool CheckForConflicts(ZipArchive newModArchive, string newModName)
+        {
+            bool conflictFound = false;
+            foreach (var entry in newModArchive.Entries)
+            {
+                if (entry.FullName.EndsWith(".cog")) continue; 
+
+                string potentialConflictPath = Path.Combine(GameDirectory, entry.FullName);
+                foreach (var installedMod in InstalledMods)
+                {
+                    if (installedMod.Value.InstalledFilePaths.Contains(potentialConflictPath) &&
+                        installedMod.Key != newModName)
+                    {
+                        WriteLineColored($"⚠️ Conflict with {installedMod.Key}: {entry.FullName}", ConsoleColor.Red);
+                        conflictFound = true;
+                    }
+                }
+            }
+
+            return conflictFound;
+        }
+
 
         private static bool IsValidZipFile(string filePath)
         {
@@ -567,6 +740,10 @@ namespace COGModManager
             try
             {
                 using WebClient webClient = new WebClient();
+                long modSizeInBytes = webClient.DownloadData(modUrl).LongLength;
+                double modSizeInMB = modSizeInBytes / (1024.0 * 1024.0);
+                modSizeInMB = Math.Round(modSizeInMB, 2);
+                WriteLineColored($"📦 Downloading mod ({modSizeInMB} MB)...", ConsoleColor.Cyan);
                 webClient.DownloadFile(modUrl, tempZipPath);
                 Console.WriteLine($"🌐 Downloaded mod from repository: {modUrl}");
 
@@ -594,7 +771,9 @@ namespace COGModManager
         public string ModVersion { get; set; }
         public List<Addon> OptionalAddons { get; set; } = new List<Addon>();
         public List<string> InstalledFilePaths { get; set; } = new List<string>();
+        public bool IsDisabled { get; set; } 
     }
+
 
 
     internal class Addon

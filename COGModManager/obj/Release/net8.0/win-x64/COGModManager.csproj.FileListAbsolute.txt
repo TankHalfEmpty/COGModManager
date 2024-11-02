@@ -396,3 +396,4 @@ D:\GITHUB\CogModManager\COGModManager\obj\Release\net8.0\win-x64\refint\COGModMa
 D:\GITHUB\CogModManager\COGModManager\obj\Release\net8.0\win-x64\COGModManager.pdb
 D:\GITHUB\CogModManager\COGModManager\obj\Release\net8.0\win-x64\COGModManager.genruntimeconfig.cache
 D:\GITHUB\CogModManager\COGModManager\obj\Release\net8.0\win-x64\ref\COGModManager.dll
+D:\GITHUB\CogModManager\COGModManager\obj\Release\net8.0\win-x64\COGModManager.sourcelink.json
