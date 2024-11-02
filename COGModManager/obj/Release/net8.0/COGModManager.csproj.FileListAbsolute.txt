@@ -1,0 +1,17 @@
+D:\repos\COGModManager\COGModManager\bin\Release\net8.0\COGModManager.exe
+D:\repos\COGModManager\COGModManager\bin\Release\net8.0\COGModManager.deps.json
+D:\repos\COGModManager\COGModManager\bin\Release\net8.0\COGModManager.runtimeconfig.json
+D:\repos\COGModManager\COGModManager\bin\Release\net8.0\COGModManager.dll
+D:\repos\COGModManager\COGModManager\bin\Release\net8.0\COGModManager.pdb
+D:\repos\COGModManager\COGModManager\bin\Release\net8.0\Newtonsoft.Json.dll
+D:\repos\COGModManager\COGModManager\obj\Release\net8.0\COGModManager.csproj.AssemblyReference.cache
+D:\repos\COGModManager\COGModManager\obj\Release\net8.0\COGModManager.GeneratedMSBuildEditorConfig.editorconfig
+D:\repos\COGModManager\COGModManager\obj\Release\net8.0\COGModManager.AssemblyInfoInputs.cache
+D:\repos\COGModManager\COGModManager\obj\Release\net8.0\COGModManager.AssemblyInfo.cs
+D:\repos\COGModManager\COGModManager\obj\Release\net8.0\COGModManager.csproj.CoreCompileInputs.cache
+D:\repos\COGModManager\COGModManager\obj\Release\net8.0\COGModMa.05D955D5.Up2Date
+D:\repos\COGModManager\COGModManager\obj\Release\net8.0\COGModManager.dll
+D:\repos\COGModManager\COGModManager\obj\Release\net8.0\refint\COGModManager.dll
+D:\repos\COGModManager\COGModManager\obj\Release\net8.0\COGModManager.pdb
+D:\repos\COGModManager\COGModManager\obj\Release\net8.0\COGModManager.genruntimeconfig.cache
+D:\repos\COGModManager\COGModManager\obj\Release\net8.0\ref\COGModManager.dll
