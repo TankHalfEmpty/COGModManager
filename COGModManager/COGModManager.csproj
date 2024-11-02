@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <ApplicationIcon>Icon.ico</ApplicationIcon>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Reference Include="Newtonsoft.Json">
+        <HintPath>..\..\..\DevResources\Newtonsoft.Json.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="ModResources\PatchFiles.zip" />
+      <EmbeddedResource Include="ModResources\PatchFiles.zip" />
+      <None Include="C:\Users\tankf\OneDrive\Pictures\Icon.ico">
+        <Link>Icon.ico</Link>
+      </None>
+    </ItemGroup>
+
+</Project>
