@@ -5,7 +5,7 @@
 Head to the [Download Website](https://cogmm.netlify.app/) and download the COGModManager.exe.
 
 Simply run the COGModManager.exe and it should boot up. If it cannot locate your game directory, you will have to pass it manually.
-
+ 
 # Guide
 ## Patching
 Begin by running the `Patch` command to patch the game files. This is **REQUIRED** in order to run mods. If you wish to disable mods without uninstalling them, run the `Unpatch` command to disable mods, and re-run the patch command to enable them.
