@@ -1,6 +1,0 @@
-D:\repos\COGModManager\COGModManager\bin\Release\net8.0\publish\COGModManager.exe
-D:\repos\COGModManager\COGModManager\bin\Release\net8.0\publish\COGModManager.dll
-D:\repos\COGModManager\COGModManager\bin\Release\net8.0\publish\COGModManager.deps.json
-D:\repos\COGModManager\COGModManager\bin\Release\net8.0\publish\COGModManager.runtimeconfig.json
-D:\repos\COGModManager\COGModManager\bin\Release\net8.0\publish\COGModManager.pdb
-D:\repos\COGModManager\COGModManager\bin\Release\net8.0\publish\Newtonsoft.Json.dll
