@@ -23,7 +23,7 @@ If the mod manager detects an update has taken place since the backup was made, 
 ## Creating A Mod
 While I will not go in depth on how to create mods, [Dark S4M](https://www.youtube.com/@DRKS4M) has made some decent tutorials on creating mods yourself, such as custom characters and maps, which should hopefully help you get started. If you'd like to turn these mods into a zip file compatable with COG Mod Manager, you will need to follow the steps below
 ## Packaging Mods
-In order to package a mod, the file must be set up in a specific manner. Firstly, you need to create a folder somewhere not in the game directory named `CartOfGlory` in which your mods will go. Here, you must put the directory and assets of your mod from the game directory folder. 
+In order to package a mod, the file must be set up in a specific manner. Firstly, you need to create a folder somewhere not in the game directory named `CartOfGlory` in which your mods will go. Here, you must put the directory and assets of your mod from the game directory folder. **Important: If you are creating a custom map, you will likely need to replace files in the `Engine` folder, also located in your game directory. If this is the case, simply include an `Engine` folder in your mod zip along with the CartsOfGlory folder, and follow the same steps for placing assets.**
 
 Let's assume your game directory is located at `C:\Program Files (x86)\Steam\steamapps\common\Slackers - Carts of Glory` which in this example i will just refer to as GameDirectory. If your mod, say a character mod is located at `GameDirectory > CartOfGlory > Content > Art > Characters_New`, you will need to create the directory in your new `CartOfGlory` folder you created outside the game directory. 
 
@@ -54,6 +54,8 @@ Finally, zip up the `CartOfGlory` folder you made with all your assets in it alo
  ┣ 📂CartOfGlory
  ┣ 📜manifest.cog
 ```
+
+Here's an [Example](https://cogmm.netlify.app/ModRepo/MasterChief.zip) of my Master Chief character mod to demonstrate what a packaged file looks like.
 
 ## Submitting to the Repository
 
