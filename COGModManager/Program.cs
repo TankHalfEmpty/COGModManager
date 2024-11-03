@@ -18,7 +18,7 @@ namespace COGModManager
         private static string DataFileName = "COGModManagerData.cog";
         private static string PatchZipPath = "COGModManager.ModResources.PatchFiles.zip";
         private static string ContentFolderName = "Content";
-        private static string WebURL = "https://cogmm.netlify.app/";
+        private static string WebURL = "https://cogmodmanager.xyz/";
 
         private static string AppDataFolder =
             Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "COGModManager");
