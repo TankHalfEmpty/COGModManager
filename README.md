@@ -2,7 +2,7 @@
 ## A simple Console Application Mod Manager for [Slackers - Carts of Glory](https://store.steampowered.com/app/2354000/Slackers__Carts_of_Glory/)
 
 # Installation
-Head to the [Download Website](https://cogmm.netlify.app/) and download the COGModManager.exe.
+Head to the [Download Website](https://cogmodmanager.xyz/) and download the COGModManager.exe.
 
 Simply run the COGModManager.exe and it should boot up. If it cannot locate your game directory, you will have to pass it manually.
  
