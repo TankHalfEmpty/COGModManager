@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("COGModManager")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3e03d0adc148b810922d623cb5131813f1047616")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8b1f8deb8865fbefa1399c77400a038b7a651010")]
 [assembly: System.Reflection.AssemblyProductAttribute("COGModManager")]
 [assembly: System.Reflection.AssemblyTitleAttribute("COGModManager")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

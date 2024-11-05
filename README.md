@@ -55,7 +55,7 @@ Finally, zip up the `CartOfGlory` folder you made with all your assets in it alo
  ┣ 📜manifest.cog
 ```
 
-Here's an [Example](https://cogmm.netlify.app/ModRepo/MasterChief.zip) of my Master Chief character mod to demonstrate what a packaged file looks like.
+Here's an [Example](https://cogmodmanager.xyz/ModRepo/MasterChief.zip) of my Master Chief character mod to demonstrate what a packaged file looks like.
 
 ## Submitting to the Repository
 

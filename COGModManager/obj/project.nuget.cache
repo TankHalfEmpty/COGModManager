@@ -1,13 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "oNBbjYkye1c=",
+  "dgSpecHash": "R4y/vj1XPwGEtZBKiCv0DhDljSur5FrexGu4GGCYXbcmDOHK8+p8YDd55lFvwA+Dz/Hvub+MgzO+5Glme91PUw==",
   "success": true,
   "projectFilePath": "D:\\GITHUB\\CogModManager\\COGModManager\\COGModManager.csproj",
-  "expectedPackageFiles": [
-    "C:\\Users\\tankf\\.nuget\\packages\\microsoft.net.illink.tasks\\8.0.8\\microsoft.net.illink.tasks.8.0.8.nupkg.sha512",
-    "C:\\Users\\tankf\\.nuget\\packages\\microsoft.netcore.app.runtime.win-x64\\8.0.8\\microsoft.netcore.app.runtime.win-x64.8.0.8.nupkg.sha512",
-    "C:\\Users\\tankf\\.nuget\\packages\\microsoft.windowsdesktop.app.runtime.win-x64\\8.0.8\\microsoft.windowsdesktop.app.runtime.win-x64.8.0.8.nupkg.sha512",
-    "C:\\Users\\tankf\\.nuget\\packages\\microsoft.aspnetcore.app.runtime.win-x64\\8.0.8\\microsoft.aspnetcore.app.runtime.win-x64.8.0.8.nupkg.sha512"
-  ],
+  "expectedPackageFiles": [],
   "logs": []
 }
